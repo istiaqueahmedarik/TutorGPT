@@ -20,6 +20,11 @@ import { Mermaid, MermaidProps } from './mermaid';
 
 import EmptyChat from './EmptyChat';
 
+function mm(graph: string): string {
+    let graphBytes: Buffer = Buffer.from(graph, 'utf8');
+    let base64Bytes: string = graphBytes.toString('base64');
+    return "https://mermaid.ink/img/" + base64Bytes;
+}
 
 
 
@@ -218,25 +223,7 @@ export default function Chat() {
 
                                 }
 
-                                if (content.type === 'mermaid') {
 
-                                    const mermaidProps: MermaidProps = {
-
-                                        text: content.text
-
-                                    };
-
-                                    return (
-
-                                        <div key={index} className="mt-4">
-
-                                            <Mermaid {...mermaidProps} />
-
-                                        </div>
-
-                                    )
-
-                                }
 
                                 if (content.type === 'image') {
 
@@ -491,10 +478,7 @@ export default function Chat() {
 
                                             role: 'assistant', content: [
 
-                                                { type: 'text', text: textContent },
-
-                                                { type: 'mermaid', text: removeMarkdown(mermaidContent) }
-
+                                                { type: 'text', text: textContent + `![Mermaid Diagram](${mm(mermaidContent)})` },
 
 
 
