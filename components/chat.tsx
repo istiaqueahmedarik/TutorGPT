@@ -95,21 +95,9 @@ export default function Chat() {
         const file = event.target.files?.[0]; // Add null check for event.target.files
 
         const reader = new FileReader();
-
-
-
-
         reader.onloadend = () => {
-
             setImageData(reader.result as string);
-
         };
-
-
-
-
-
-
 
         if (file) {
 
@@ -325,9 +313,6 @@ export default function Chat() {
 
                                     disabled={processed}
 
-
-
-
                                 />
 
                             </div>
@@ -482,10 +467,6 @@ export default function Chat() {
                                         },
 
                                     ]
-
-
-
-
                                     );
 
                                 }
@@ -500,11 +481,6 @@ export default function Chat() {
                                 setImageData(null);
 
                                 setError("");
-
-
-
-
-
 
 
                             }}

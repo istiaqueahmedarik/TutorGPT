@@ -55,7 +55,7 @@ export async function continueConversation(history: Message[],sd:string) {
 
       mermaid: z.string().describe('A mermaid diagram  if needed for the response but mermaid diagram must be raw, no extra formatting. no new line character should be present in the mermaid diagram. if no need of mermaid diagram add a funny jokes related to the topic as diagram , background of the diagram should be #1D1D1D.'),
 
-        text: z.string().describe('The oher response text in Markdown it should be in markdown format and should not contain any mermaid diagram. the text result should be dyslexic and other learning disabled friendly'),
+        text: z.string().describe('The oher response text in Markdown it should be in markdown format and should not contain any mermaid diagram. the text result (font size , color) should be dyslexic and other learning disabled friendly'),
 
       }),
 
@@ -125,7 +125,7 @@ export async function continueConversationImage(history: Message[], sd: string) 
 
         mermaid: z.string().describe('A mermaid diagram  if needed for the response but mermaid diagram must be raw, no extra formatting. no new line character should be present in the mermaid diagram. if no need of mermaid diagram add a funny jokes related to the topic as diagram, background of the diagram should be #1D1D1D.'),
 
-        text: z.string().describe('The oher response text in Markdown it should be in markdown format and should not contain any mermaid diagram. the text result should be dyslexic and other learning disabled friendly'),
+        text: z.string().describe('The oher response text in Markdown it should be in markdown format and should not contain any mermaid diagram. the text result (font size , color)  should be dyslexic and other learning disabled friendly'),
 
       }),
 
