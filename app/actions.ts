@@ -12,10 +12,15 @@ type Content = {
 };
 export interface Message {
   role: 'user' | 'assistant' |'tool';
-  content: [];
+  content: [
+    { type: string; text: string; }, 
+    { type: string; image: string; }
+  ] | [
+    { type: string; text: string; }
+  ];
 }
 
-export async function continueConversation(history: Message[],sd:string) {
+export async function continueConversation(history: any[],sd:string) {
   'use server';
   
   
@@ -49,7 +54,7 @@ export async function continueConversation(history: Message[],sd:string) {
   };
 }
 
-export async function continueConversationImage(history: Message[], sd: string) {
+export async function continueConversationImage(history: any[], sd: string) {
   console.log(sd);
   const streamText = createStreamableValue();
 

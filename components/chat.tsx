@@ -1,7 +1,7 @@
 'use client'
 import { continueConversation, continueConversationImage, systemDesc } from '@/app/actions';
 import { google } from '@ai-sdk/google';
-import { generateText } from 'ai';
+import { CoreMessage, generateText } from 'ai';
 import { readStreamableValue } from 'ai/rsc';
 import { ArrowBigRightDash, CircleX, User, X } from 'lucide-react';
 import React, { useState, useEffect, useRef } from 'react';
@@ -25,7 +25,7 @@ export default function Chat() {
     const [imageData, setImageData] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [error, setError] = useState<string>("");
-    const [conversation, setConversation] = useState<Message[]>([]);
+    const [conversation, setConversation] = useState<any[]>([]);
 
     const [input, setInput] = useState<string>('');
     const generateAdditionalInfo = (subject: string) => {
@@ -108,7 +108,7 @@ export default function Chat() {
                 {conversation.map((message, index) => (
                     <div key={index}>
                         {
-                            message.content.map((content, index) => {
+                            message.content.map((content: Content, index: number) => {
                                 if (content.type === 'text') {
                                     return (
                                         <p key={index} className={message.role === 'user' ? 'flex flex-row  w-fit pt-2 pb-2 pl-5 pr-5 rounded-md float-right' : ''}>
@@ -250,7 +250,7 @@ export default function Chat() {
                                         {
                                             role: 'assistant', content: [
                                                 { type: 'text', text: textContent },
-                                                { type: 'mermaid', text: removeMarkdown(mermaidContent) }
+                                                { type: 'tool-call', text: removeMarkdown(mermaidContent) }
 
                                             ]
                                         },
@@ -294,4 +294,3 @@ export default function Chat() {
         </div>
     );
 }
-
