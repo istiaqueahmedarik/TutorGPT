@@ -1,5 +1,5 @@
 'use client'
-import { Message, continueConversation, continueConversationImage, systemDesc } from '@/app/actions';
+import { continueConversation, continueConversationImage, systemDesc } from '@/app/actions';
 import { google } from '@ai-sdk/google';
 import { generateText } from 'ai';
 import { readStreamableValue } from 'ai/rsc';
@@ -9,13 +9,24 @@ import Markdown from 'react-markdown';
 import { set } from 'zod';
 import { Mermaid, MermaidProps } from './mermaid';
 import EmptyChat from './EmptyChat';
+type Content = {
+    type: 'text' | 'mermaid' | 'image';
+    text?: string;
+    image?: string;
+};
+
+type Message = {
+    role: 'user' | 'assistant';
+    content: Content[];
+};
 
 export default function Chat() {
     const [subject, setSubject] = useState('');
-    const [imageData, setImageData] = useState(null);
-    const fileInputRef = useRef(null);
+    const [imageData, setImageData] = useState<string | null>(null);
+    const fileInputRef = useRef<HTMLInputElement>(null);
     const [error, setError] = useState<string>("");
     const [conversation, setConversation] = useState<Message[]>([]);
+
     const [input, setInput] = useState<string>('');
     const generateAdditionalInfo = (subject: string) => {
         const additionalInfo = `
@@ -58,9 +69,11 @@ export default function Chat() {
     };
 
     const handleButtonClick = () => {
-        fileInputRef.current.click();
+        if (fileInputRef.current) {
+            fileInputRef.current.click();
+        }
     };
-    function removeMarkdown(input) {
+    function removeMarkdown(input: string) {
         const markdownRegex = /(\*{1,2}|_{1,2}|`{1,3}|\~{2}|#{1,6}|\!?\[.*?\]\(.*?\))/g;
         return input.replace(markdownRegex, '');
     }
