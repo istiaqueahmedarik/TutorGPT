@@ -409,12 +409,7 @@ export default function Chat() {
                                                 ]
 
                                         },
-
-
-
-
                                     ]
-
                                         ,
 
                                         aidesc
