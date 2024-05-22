@@ -60,7 +60,29 @@ export default function Chat() {
 
 
     useEffect(() => {
+        const pasteHandler = (event: ClipboardEvent) => {
+            if (event.clipboardData === null) return;
+            const items = event.clipboardData.items;
 
+            for (let i = 0; i < items.length; i++) {
+                if (items[i].type.indexOf('image') !== -1) {
+                    const blob = items[i].getAsFile();
+                    const reader = new FileReader();
+
+                    reader.onload = function (event) {
+                        if (event.target === null) return;
+                        const base64Image = event.target.result;
+                        reader.onloadend = () => {
+                            setImageData(base64Image as string);
+                        };
+
+                    };
+                    if (blob !== null)
+                        reader.readAsDataURL(blob);
+                }
+            }
+        };
+        window.addEventListener('paste', pasteHandler);
         async function fetchData() {
 
             const storedSubject = localStorage.getItem('subject') || 'Math';
@@ -76,7 +98,9 @@ export default function Chat() {
         }
 
         fetchData();
-
+        return () => {
+            window.removeEventListener('paste', pasteHandler);
+        };
     }, []);
 
 
