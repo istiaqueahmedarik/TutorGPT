@@ -11,12 +11,9 @@ import { readStreamableValue } from 'ai/rsc';
 import { ArrowBigRightDash, CircleX, User, X } from 'lucide-react';
 
 import React, { useState, useEffect, useRef } from 'react';
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
-import Markdown from 'react-markdown';
-
-import { set } from 'zod';
-
-import { Mermaid, MermaidProps } from './mermaid';
 
 import EmptyChat from './EmptyChat';
 
@@ -202,7 +199,10 @@ export default function Chat() {
 
                                         <p key={index} className={message.role === 'user' ? 'flex flex-row  w-fit pt-2 pb-2 pl-5 pr-5 rounded-md float-right' : ''}>
 
-                                            <span className='border-1 rounded-full mr-2'>{message.role === 'user' && <User />}</span> <Markdown>{content.text}</Markdown>
+                                            <span className='border-1 rounded-full mr-2'>{message.role === 'user' && <User />}</span>
+                                            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                                {content.text}
+                                            </ReactMarkdown>
 
                                         </p>
 
