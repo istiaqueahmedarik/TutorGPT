@@ -11,8 +11,8 @@ type Content = {
     image?: string;
 };
 export interface Message {
-  role: 'user' | 'assistant';
-  content: Content[];
+  role: 'user' | 'assistant' |'tool';
+  content: [];
 }
 
 export async function continueConversation(history: Message[],sd:string) {
