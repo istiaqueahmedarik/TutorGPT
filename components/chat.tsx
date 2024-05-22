@@ -117,14 +117,16 @@ export default function Chat() {
                                     )
                                 }
                                 if (content.type === 'mermaid') {
-                                    const mermaidProps: MermaidProps = {
-                                        text: content.text
-                                    };
-                                    return (
-                                        <div key={index} className="mt-4">
-                                            <Mermaid {...mermaidProps} />
-                                        </div>
-                                    )
+                                    if (content.text) {
+                                        const mermaidProps: MermaidProps = {
+                                            text: content.text
+                                        };
+                                        return (
+                                            <div key={index} className="mt-4">
+                                                <Mermaid {...mermaidProps} />
+                                            </div>
+                                        )
+                                    }
                                 }
                                 if (content.type === 'image') {
                                     return (
@@ -189,10 +191,8 @@ export default function Chat() {
                             <textarea
                                 disabled={processed}
                                 id="prompt-textarea"
-                                tabIndex="0"
                                 data-id="root"
                                 dir="auto"
-                                rows="1"
                                 placeholder="Message TutorGPT"
                                 className="resize-none border-0 bg-transparent px-3 text-token-text-primary focus:ring-0 focus-visible:ring-0 max-h-52 h-[40px] mt-auto mb-auto py-2 overflow-y-hidden outline-none bg-[#232628]"
                                 spellCheck="false"

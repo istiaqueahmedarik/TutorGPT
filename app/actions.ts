@@ -1,19 +1,24 @@
 'use server';
 
-import { generateObject, generateText, streamObject, streamText } from 'ai';
+import { generateObject, generateText, streamObject, streamText, CoreMessage } from 'ai';
 import { google } from '@ai-sdk/google';
 import { createStreamableValue } from 'ai/rsc';
 import { z } from 'zod';
 import { text } from 'stream/consumers';
-
+type Content = {
+    type: 'text' | 'mermaid' | 'image';
+    text?: string;
+    image?: string;
+};
 export interface Message {
   role: 'user' | 'assistant';
-  content: [];
+  content: Content[];
 }
 
 export async function continueConversation(history: Message[],sd:string) {
   'use server';
-
+  
+  
   const stream = createStreamableValue();
 
   (async () => {
